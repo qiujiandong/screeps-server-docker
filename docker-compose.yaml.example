@@ -1,0 +1,34 @@
+services:
+  screeps-server:
+    image: miniball/screeps-server
+    volumes:
+      # TODO add your local server path
+      - <your local server path>:/screeps:rw
+    depends_on:
+      - mongo
+      - redis
+    ports:
+      - 21025:21025
+    environment:
+      MONGO_HOST: mongo
+      REDIS_HOST: redis
+      # TODO add your steam api key
+      # Steam API key can be obtained on this page: http://steamcommunity.com/dev/apikey
+      STEAM_API_KEY: <your steam api key>
+    command: ["start"]
+
+  mongo:
+    image: mongo:latest
+    volumes:
+      # TODO add your local mongo database path
+      - <your local mongo database path>:/data/db:rw
+    expose:
+      - 27017
+
+  redis:
+    image: redis:3.0.6
+    volumes:
+      # TODO add your local redis cache path
+      - <your local redis cache path>:/data:rw
+    expose:
+      - 6379
