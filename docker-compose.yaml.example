@@ -26,7 +26,7 @@ services:
       - 27017
 
   redis:
-    image: redis:3.0.6
+    image: redis:latest
     volumes:
       # TODO add your local redis cache path
       - <your local redis cache path>:/data:rw

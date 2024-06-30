@@ -20,7 +20,16 @@
 - 如果可以访问dockerhub，可以直接拉取构建完成的镜像：
 
     ```shell
-    docker push miniball/screeps-server:latest
+    docker pull miniball/screeps-server:latest
+    ```
+
+    如果需要设置代理，可以修改`/etc/systemd/system/docker.service.d/proxy.conf`
+    
+    ```
+    [Service]
+    Environment="HTTP_PROXY=http://127.0.0.1:7890/"
+    Environment="HTTPS_PROXY=http://127.0.0.1:7890/"
+    Environment="NO_PROXY=localhost,127.0.0.1"
     ```
 
 - 或者也可以从头开始构建。
@@ -77,6 +86,14 @@ system.resetAllData()
 ## Others
 
 如果想添加其它mod，可以直接在`mods.json`文件中改，然后安装相应的mod。而我为了让server轻量一些，就只选择了[screepsmod-mongo](https://github.com/ScreepsMods/screepsmod-mongo)和[screepsmod-auth](https://github.com/ScreepsMods/screepsmod-auth)这两个我认为是必要的mod。前者可以避免很多奇怪的bug，而后者则是出于以下两个目的。
+
+在使用yarn安装screeps的时候可能会有下载的问题，可以尝试更换yarn源。
+
+```shell
+ yarn config set registry https://registry.npmmirror.com
+```
+
+手动完成[docker-entrypoint.sh](screeps-server/docker-entrypoint.sh)中init的步骤之后再运行即可。
 
 ### Upload Code
 
